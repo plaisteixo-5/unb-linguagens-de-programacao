@@ -13,3 +13,4 @@ em Go.
 ## Setup do ambiente
 
 Documentação: https://golang.org/doc/install
+Código inicial de exemplo (main.go) retirado da documentação: https://golang.org/doc/tutorial/web-service-gin
