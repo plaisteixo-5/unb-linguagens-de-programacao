@@ -3,6 +3,13 @@ package main
 import (
     "net/http"
     "github.com/gin-gonic/gin"
+
+    "flag"
+    "fmt"
+
+    "github.com/aws/aws-sdk-go/aws"
+    "github.com/aws/aws-sdk-go/aws/session"
+    "github.com/aws/aws-sdk-go/service/sqs"
 )
 
 type mensagem struct {
@@ -24,28 +31,17 @@ var mensagens = []mensagem{
 func main() {
 
     router := gin.Default()
-    router.GET("/mensagens", buscaMensagens)
-    router.GET("/mensagens/:id", buscaMensagemPorId)
+    router.POST("/v1/mensagens", geraMensagem)
 
     router.Run("localhost:8080")
 
 }
 
-func buscaMensagens(c *gin.Context) {
-    c.IndentedJSON(http.StatusOK, mensagens)
-}
+func geraMensagem(c *gin.Context) {
 
-func buscaMensagemPorId(c *gin.Context) {
+    var novasMensagens mensagem
 
-    id := c.Param("id")
-
-    for _, a := range mensagens {
-        if a.ID == id {
-            c.IndentedJSON(http.StatusOK, a)
-            return
-        }
-    }
-
-    c.IndentedJSON(http.StatusNotFound, gin.H{"message": "messagem não encontrada"})
+    albums = append(albums, newAlbum)
+    c.IndentedJSON(http.StatusCreated, newAlbum)
 
 }

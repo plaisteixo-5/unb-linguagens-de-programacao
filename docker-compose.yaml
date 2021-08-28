@@ -2,6 +2,8 @@ version: '3.0'
 
 services:
 
+  # Inicializa o SQS via localstack
+  # Mais informações: https://github.com/localstack/localstack
   localstack:
     image: localstack/localstack:latest
     environment:
@@ -11,6 +13,8 @@ services:
     ports:
       - '4566:4566'
 
+  # Cria uma fila SQS com a AWS CLI
+  # Mais informações: https://hub.docker.com/r/amazon/aws-cli
   setup-fila-sqs:
     image: amazon/aws-cli
     volumes:

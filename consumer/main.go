@@ -3,6 +3,13 @@ package main
 import (
     "net/http"
     "github.com/gin-gonic/gin"
+
+    "flag"
+    "fmt"
+
+    "github.com/aws/aws-sdk-go/aws"
+    "github.com/aws/aws-sdk-go/aws/session"
+    "github.com/aws/aws-sdk-go/service/sqs"
 )
 
 type mensagem struct {
@@ -14,22 +21,6 @@ type mensagem struct {
 
 func main() {
 
-    router := gin.Default()
-    router.POST("/mensagens", criarMensagem)
-
-    router.Run("localhost:8080")
 
 }
 
-func criarMensagem(c *gin.Context) {
-
-    var novaMensagem mensagem
-
-    if err := c.BindJSON(&novaMensagem); err != nil {
-        return
-    }
-
-    albums = append(albums, newAlbum)
-    c.IndentedJSON(http.StatusCreated, newAlbum)
-
-}

@@ -8,6 +8,10 @@ Repositório dedicado à matéria de Linguagens de Programação
 
 Este projeto será desenvolvido em Go. A ideia é explorar o conceito de concorrência numa aplicação desenvolvida em Go.
 
+## Arquitetura geral do projeto
+
+![](/assets/arquitetura_trabalho_lp.png)
+
 ## Setup do ambiente
 
 1) Go
@@ -15,16 +19,18 @@ Este projeto será desenvolvido em Go. A ideia é explorar o conceito de concorr
 Documentação: https://golang.org/doc/install
 Código inicial de exemplo (main.go) retirado da documentação: https://golang.org/doc/tutorial/web-service-gin
 
-2) Sqs (localstack)
+2) Sqs (localstack) + criação da fila (AWS CLI)
 
 > docker-compose up 
 
-3) Aws CLI
-
-https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html
-
-
 ### SQS
 
-- aws --endpoint-url=http://localstack:4576 sqs list-queues
-- aws --endpoint-url=http://localstack:4576 sqs create-queue --queue-name=filaTeste
+Criar uma fila
+
+> aws --endpoint-url=http://localstack:4556 sqs create-queue --queue-name=fila_trabalho_lp
+
+Listar as filas
+
+> aws --endpoint-url=http://localhost:4566 sqs list-queues
+
+
