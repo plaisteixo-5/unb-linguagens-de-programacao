@@ -1,19 +1,40 @@
-version: '2.1'
+version: '3.0'
+
 services:
-...
-localstack:
-  image: localstack/localstack
-  ports:
-    - "4566:4566"
-    - "4571:4571"
-    - "${PORT_WEB_UI-8080}:${PORT_WEB_UI-8080}"
-  environment:
-    - SERVICES=${SERVICES- }
-    - DEBUG=${DEBUG- }
-    - DATA_DIR=${DATA_DIR- }
-    - PORT_WEB_UI=${PORT_WEB_UI- }
-    - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR- }
-    - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
-    - DOCKER_HOST=unix:///var/run/docker.sock
-  volumes:
-    - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+
+  localstack:
+    image: localstack/localstack:latest
+    environment:
+      - AWS_DEFAULT_REGION=sa-east-1
+      - EDGE_PORT=4566
+      - SERVICES=sqs
+    ports:
+      - '4566:4566'
+
+  setup-fila-sqs:
+    image: amazon/aws-cli
+    volumes:
+      - ./aws:/projeto/unb
+    environment:
+      - AWS_ACCESS_KEY_ID=teste
+      - AWS_SECRET_ACCESS_KEY=teste
+      - AWS_DEFAULT_REGION=sa-east-1
+      - AWS_DEFAULT_OUTPUT=json
+    entrypoint: /bin/sh -c
+    command: >
+      "
+
+        echo [INFO] criando modulo de fila SQS...
+        sleep 10
+
+        # Cria fila SQS
+        aws sqs create-queue --endpoint-url=http://localstack:4566 --queue-name fila_trabalho_lp;
+
+        echo [INFO] OK...
+
+      "
+    depends_on:
+      - localstack
+
+
+
