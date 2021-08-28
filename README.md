@@ -10,13 +10,14 @@ Este projeto será desenvolvido em Go. A ideia é explorar o conceito de concorr
 
 ## Arquitetura geral do projeto
 
-![](/assets/arquitetura_trabalho_lp.png)
+![](/assets/arquitetura_geral_v002.png)
 
 ## Setup do ambiente
 
 1) Go
 
 Documentação: https://golang.org/doc/install
+<br>
 Código inicial de exemplo (main.go) retirado da documentação: https://golang.org/doc/tutorial/web-service-gin
 
 2) Sqs (localstack) + criação da fila (AWS CLI)
