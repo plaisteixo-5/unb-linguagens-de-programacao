@@ -12,9 +12,8 @@ import (
 
 
 func GetMessages(sess *session.Session, queueURL *string, timeout *int64) (*sqs.ReceiveMessageOutput, error) {
-    // Create an SQS service client
-    svc := sqs.New(sess)
 
+    svc := sqs.New(sess)
 
     msgResult, err := svc.ReceiveMessage(&sqs.ReceiveMessageInput{
         AttributeNames: []*string{
@@ -40,9 +39,12 @@ func main() {
     timeout := flag.Int64("t", 15, "How long, in seconds, that the message is hidden from others")
     flag.Parse()
 
-    sess := session.Must(session.NewSessionWithOptions(session.Options{
-         SharedConfigState: session.SharedConfigEnable,
-    }))
+    cfg := aws.Config{
+        Region: aws.String("sa-east-1"),
+        Endpoint: aws.String("http://localhost:4566"),
+    }
+
+    sess := session.Must(session.NewSession(&cfg))
 
     queueURL := aws.String("http://localhost:4566/000000000000/fila_trabalho_lp")
 
@@ -54,7 +56,10 @@ func main() {
         return
     }
 
-    fmt.Println("Message ID:     " + *msgResult.Messages[0].MessageId)
-    fmt.Println("Message Handle: " + *msgResult.Messages[0].ReceiptHandle)
+    for _, message := range msgResult.Messages {
+    	fmt.Println("Message ID:     " + *message.MessageId)
+        fmt.Println("Message Handle: " + *message.ReceiptHandle)
+        fmt.Println("Message Body: " + *message.Body)
+    }
 
 }
