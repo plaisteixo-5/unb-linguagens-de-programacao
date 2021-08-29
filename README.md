@@ -11,7 +11,7 @@ Este projeto será desenvolvido em Go. A ideia é explorar o conceito de concorr
 ## Contextualização
 
 
-## Arquitetura geral do projeto
+### Arquitetura geral do projeto
 
 ![](/assets/arquitetura_geral_v002.png)
 
@@ -19,7 +19,7 @@ Este projeto será desenvolvido em Go. A ideia é explorar o conceito de concorr
 
 ![](/assets/funcionamento_micro_v002.png)
 
-## Proposta de trabalho
+### Proposta de trabalho
 
  Nosso consumer precisa resolver várias questões ao mesmo tempo e não pode realizar tudo de forma síncrona. Será necessário explorar os recursos da linguagem Golang
 para lidar com várias situações de modo concorrente. Utilizaremos as Goroutines e channels como recursos da linguagem para lidar com os desafios que nossa aplicação tem.
