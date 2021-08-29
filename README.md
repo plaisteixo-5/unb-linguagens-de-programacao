@@ -17,7 +17,7 @@ Este projeto será desenvolvido em Go. A ideia é explorar o conceito de concorr
 
 ## Funcionamento do Consumer
 
-![](/assets/funcionamento_micro.png)
+![](/assets/funcionamento_micro_v002.png)
 
 ## Proposta de trabalho
 
