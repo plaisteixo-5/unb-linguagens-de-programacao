@@ -12,6 +12,11 @@ Este projeto será desenvolvido em Go. A ideia é explorar o conceito de concorr
 
 ![](/assets/arquitetura_geral_v002.png)
 
+## Proposta de trabalho
+
+ Nosso consumer precisa resolver várias questões ao mesmo tempo e não pode realizar tudo de forma síncrona. Será necessário explorar os recursos da linguagem Golang
+para lidar com várias situações de modo concorrente. Utilizaremos as Goroutines e channels como recursos da linguagem para lidar com os desafios que nossa aplicação tem.
+
 ## Setup do ambiente
 
 1) Go
@@ -29,6 +34,8 @@ Código inicial de exemplo (main.go) retirado da documentação: https://golang.
 
 ### SQS
 
+#### Introdução
+
 Obs.: o ponto de partida para configurar o producer e o consumer foi a documentação da AWS:
 
 Consumer:
@@ -42,6 +49,8 @@ Producer:
 ```
 https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/go/sqs/SendMessage/SendMessage.go
 ```
+
+#### Comandos úteis
 
 ##### Criar uma fila
 
@@ -68,7 +77,7 @@ aws --endpoint-url=http://localhost:4566 sqs list-queues
  aws --endpoint-url=http://localhost:4566 sqs send-message --queue-url http://localhost:4566/000000000000/fila_trabalho_lp --message-body "Teste"
 ```
 
-##### Variáveis de ambiente
+##### Variáveis de ambiente (linux)
 
 ```
  export AWS_ACCESS_KEY_ID=teste &&
