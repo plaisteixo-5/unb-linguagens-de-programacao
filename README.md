@@ -8,9 +8,16 @@ Repositório dedicado à matéria de Linguagens de Programação
 
 Este projeto será desenvolvido em Go. A ideia é explorar o conceito de concorrência numa aplicação desenvolvida em Go.
 
+## Contextualização
+
+
 ## Arquitetura geral do projeto
 
 ![](/assets/arquitetura_geral_v002.png)
+
+## Funcionamento do Consumer
+
+![](/assets/funcionamento_micro.png)
 
 ## Proposta de trabalho
 
