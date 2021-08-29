@@ -22,30 +22,44 @@ Código inicial de exemplo (main.go) retirado da documentação: https://golang.
 
 2) Sqs (localstack) + criação da fila (AWS CLI)
 
-> docker-compose up 
+```
+ docker-compose up 
+```
+ 
 
 ### SQS
 
-Criar uma fila
+##### Criar uma fila
 
-> aws --endpoint-url=http://localstack:4556 sqs create-queue --queue-name=fila_trabalho_lp
+```
+ aws --endpoint-url=http://localstack:4556 sqs create-queue --queue-name=fila_trabalho_lp
+```
 
-Listar as filas
 
-> aws --endpoint-url=http://localhost:4566 sqs list-queues
+##### Listar as filas
 
-Listar mensagens
+```
+aws --endpoint-url=http://localhost:4566 sqs list-queues
+```
 
-aws --endpoint-url=http://localhost:4566 sqs receive-message --queue-url http://localhost:4566/000000000000/fila_trabalho_lp
+##### Listar mensagens
 
-Enviar mensagens
+```
+ aws --endpoint-url=http://localhost:4566 sqs receive-message --queue-url http://localhost:4566/000000000000/fila_trabalho_lp
+```
 
-aws --endpoint-url=http://localhost:4566 sqs send-message --queue-url http://localhost:4566/000000000000/fila_trabalho_lp --message-body "Teste"
+##### Enviar mensagens
 
-Variáveis de ambiente
+```
+ aws --endpoint-url=http://localhost:4566 sqs send-message --queue-url http://localhost:4566/000000000000/fila_trabalho_lp --message-body "Teste"
+```
 
-export AWS_ACCESS_KEY_ID=teste &&
-export AWS_SECRET_ACCESS_KEY=teste &&
-export AWS_SESSION_TOKEN=teste &&
-export AWS_DEFAULT_REGION=sa-east-1 &&
-export AWS_DEFAULT_OUTPUT=json
+##### Variáveis de ambiente
+
+```
+ export AWS_ACCESS_KEY_ID=teste &&
+ export AWS_SECRET_ACCESS_KEY=teste &&
+ export AWS_SESSION_TOKEN=teste &&
+ export AWS_DEFAULT_REGION=sa-east-1 &&
+ export AWS_DEFAULT_OUTPUT=json
+```
