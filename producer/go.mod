@@ -1,4 +1,4 @@
-module estudo.com/producer
+module github.com/MarceloAmorim25/unb-linguagens-de-programacao/producer
 
 go 1.17
 
