@@ -5,7 +5,7 @@ import (
     "github.com/aws/aws-sdk-go/aws/session"
 )
 
-func CreateSession(region string, endpoint string) *session.Session {
+func CreateAwsSession(region string, endpoint string) *session.Session {
 
     cfg := aws.Config{
         Region: aws.String(region),

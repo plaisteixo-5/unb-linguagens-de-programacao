@@ -2,7 +2,7 @@ package main
 
 import (
     "fmt"
-    "github.com/MarceloAmorim25/unb-linguagens-de-programacao/producer/functional"
+    "estudos.unb.lp.go.producer/messages/functional"
 )
 
 func main() {
@@ -11,8 +11,8 @@ func main() {
     endpoint := "http://localhost:4566"
     queueURL := "http://localhost:4566/000000000000/fila_trabalho_lp"
 
-    sess := functional.CreateSession(region, endpoint)
-    err := functional.SendMsg(sess, queueURL)
+    sess := functional.CreateAwsSession(region, endpoint)
+    err := functional.SendMessage(sess, queueURL)
 
     if err != nil {
         fmt.Println("Got an error sending the message:")

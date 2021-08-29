@@ -7,16 +7,16 @@ import (
 )
 
 
-type mensagem struct {
+type message struct {
     ID     string  `json:"id"`
     Titulo  string  `json:"title"`
     DataCriacao string  `json:"dataCriacao"`
     Origem  string `json:"origem"`
 }
 
-func SendMsg(sess *session.Session, queueURL string) error {
+func SendMessage(sess *session.Session, queueURL string) error {
 
-/*     var newMessage = mensagem{ID: "1", Titulo: "Mensagem teste 1", DataCriacao: "1/08/2021", Origem: "SQS producer"} */
+/*     var newMessage = message{ID: "1", Titulo: "Mensagem teste 1", DataCriacao: "1/08/2021", Origem: "SQS producer"} */
 
     svc := sqs.New(sess)
 
