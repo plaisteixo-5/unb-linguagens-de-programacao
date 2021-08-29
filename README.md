@@ -10,6 +10,15 @@ Este projeto será desenvolvido em Go. A ideia é explorar o conceito de concorr
 
 ## Contextualização
 
+Um serviço produtor de mensagens (Producer) é responsável por receber retornos relativos à três Universidades. A empresa responsável pela produção de mensagens 
+envia os três tipos: A, B e C. Entretanto, algumas mensagens estão vindo com formatos incorretos e precisam ser filtradas. Essas universidades contraram uma equipe de
+desenvolvedores para solucionar o problema de distribuição de mensagens, após muitas reclamações de mensagens que não chegavam ao seu destino. Os devs identificaram
+que muitas mensagens incorretas estavam sobrecarregando as aplicações e o serviço de fila da AWS (SQS) - o qual continuava tentando reenviar as mensagens incorretas.
+Além disso, foi percebido que os fluxos de mensagens eram muito maiores para alguns tipos de mensagens apenas. A implementação original era totalmente síncrona
+e sequencial, gerando diversos problemas no processamento dessas mensagens. Nesse projeto, tentamos solucionar a questão utilizando os recursos da linguagem Go.
+
+
+Vantagens dessa implementação -> Caso exista um fluxo muito grande de mensagens de A, isso não gerará impacto nos fluxos de B e C, tendo em vista o funcionamento independente.
 
 ### Arquitetura geral do projeto
 
