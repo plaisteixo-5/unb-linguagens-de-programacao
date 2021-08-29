@@ -2,10 +2,6 @@ package main
 
 import (
     "fmt"
-
-    "github.com/aws/aws-sdk-go/aws"
-    "github.com/aws/aws-sdk-go/aws/session"
-    "github.com/aws/aws-sdk-go/service/sqs"
     "github.com/MarceloAmorim25/unb-linguagens-de-programacao/producer/functional"
 )
 
@@ -15,8 +11,8 @@ func main() {
     endpoint := "http://localhost:4566"
     queueURL := "http://localhost:4566/000000000000/fila_trabalho_lp"
 
-    sess := createSession(region, endpoint)
-    err := SendMsg(sess, queueURL)
+    sess := functional.CreateSession(region, endpoint)
+    err := functional.SendMsg(sess, queueURL)
 
     if err != nil {
         fmt.Println("Got an error sending the message:")
