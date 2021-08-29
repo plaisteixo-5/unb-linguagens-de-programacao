@@ -34,4 +34,18 @@ Listar as filas
 
 > aws --endpoint-url=http://localhost:4566 sqs list-queues
 
+Listar mensagens
 
+aws --endpoint-url=http://localhost:4566 sqs receive-message --queue-url http://localhost:4566/000000000000/fila_trabalho_lp
+
+Enviar mensagens
+
+aws --endpoint-url=http://localhost:4566 sqs send-message --queue-url http://localhost:4566/000000000000/fila_trabalho_lp --message-body "Teste"
+
+Variáveis de ambiente
+
+export AWS_ACCESS_KEY_ID=teste &&
+export AWS_SECRET_ACCESS_KEY=teste &&
+export AWS_SESSION_TOKEN=teste &&
+export AWS_DEFAULT_REGION=sa-east-1 &&
+export AWS_DEFAULT_OUTPUT=json

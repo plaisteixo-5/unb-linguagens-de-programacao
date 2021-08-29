@@ -1,47 +1,44 @@
 package main
 
 import (
-    "net/http"
-    "github.com/gin-gonic/gin"
-
-    "flag"
-    "fmt"
-
-    "github.com/aws/aws-sdk-go/aws"
-    "github.com/aws/aws-sdk-go/aws/session"
-    "github.com/aws/aws-sdk-go/service/sqs"
+   "fmt"
+   "github.com/aws/aws-sdk-go/aws"
+   "github.com/aws/aws-sdk-go/aws/session"
+   "github.com/aws/aws-sdk-go/service/sqs"
+   "github.com/aws/aws-sdk-go/service/sqs/sqsiface"
 )
 
-type mensagem struct {
-    ID     string  `json:"id"`
-    Titulo  string  `json:"title"`
-    DataCriacao string  `json:"dataCriacao"`
-    Origem  string `json:"origem"`
+func newSQS() sqsiface.SQSAPI {
+
+   cfg := aws.Config{
+      Region: aws.String("sa-east-1"),
+      Endpoint: aws.String("http://localhost:4566"),
+   }
+
+   sess := session.Must(session.NewSession(&cfg))
+
+   cliSQS := sqs.New(sess)
+
+   return cliSQS
+
 }
 
-var mensagens = []mensagem{
-    {ID: "1", Titulo: "Mensagem teste 1", DataCriacao: "1/08/2021", Origem: "SQS producer"},
-    {ID: "2", Titulo: "Mensagem teste 2", DataCriacao: "16/08/2021", Origem: "SQS producer"},
-    {ID: "3", Titulo: "Mensagem teste 3", DataCriacao: "6/08/2021", Origem: "SQS producer"},
-    {ID: "4", Titulo: "Mensagem teste 4", DataCriacao: "2/08/2021", Origem: "SQS producer"},
-    {ID: "5", Titulo: "Mensagem teste 5", DataCriacao: "20/08/2021", Origem: "SQS producer"},
-    {ID: "6", Titulo: "Mensagem teste 6", DataCriacao: "26/08/2021", Origem: "SQS producer"},
+func sendMessage(sqsClient sqsiface.SQSAPI, msg, queueURL string) (*sqs.SendMessageOutput, error) {
+
+   sqsMessage := &sqs.SendMessageInput{
+      QueueUrl:    aws.String(queueURL),
+      MessageBody: aws.String(msg),
+   }
+
+   output, err := sqsClient.SendMessage(sqsMessage)
+   if err != nil {
+      return nil, fmt.Errorf("could not send message to queue %v: %v", queueURL, err)
+   }
+
+   return output, nil
 }
 
 func main() {
-
-    router := gin.Default()
-    router.POST("/v1/mensagens", geraMensagem)
-
-    router.Run("localhost:8080")
-
-}
-
-func geraMensagem(c *gin.Context) {
-
-    var novasMensagens mensagem
-
-    albums = append(albums, newAlbum)
-    c.IndentedJSON(http.StatusCreated, newAlbum)
-
+   sqsClient := newSQS()
+   sendMessage(sqsClient, "Mensagem de teste 2", "http://localhost:4566/000000000000/fila_trabalho_lp")
 }
