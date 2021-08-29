@@ -29,6 +29,20 @@ Código inicial de exemplo (main.go) retirado da documentação: https://golang.
 
 ### SQS
 
+Obs.: o ponto de partida para configurar o producer e o consumer foi a documentação da AWS:
+
+Consumer:
+
+```
+https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/go/sqs/ReceiveMessage/ReceiveMessage.go
+```
+
+Producer:
+
+```
+https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/go/sqs/SendMessage/SendMessage.go
+```
+
 ##### Criar uma fila
 
 ```
