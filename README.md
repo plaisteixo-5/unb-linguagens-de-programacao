@@ -22,7 +22,7 @@ Vantagens dessa implementação -> Caso exista um fluxo muito grande de mensagen
 
 ### Arquitetura geral do projeto
 
-![](/assets/arquitetura_geral_v002.png)
+![](/assets/arquitetura_geral_v003.png)
 
 ## Funcionamento do Consumer
 
