@@ -18,7 +18,7 @@ func pollSqs(chn chan<- *sqs.Message, sess *session.Session) {
   for {
 
      fmt.Println("[INICIA ITERAÇÃO - FETCH] PARA BUSCAR MENSAGENS DA FILA")
-     fmt.Println("Preparing application...")
+     fmt.Println("Preparing application for fetch messages...")
      time.Sleep(3 * time.Second)
 
      fmt.Println("Go...")
@@ -42,10 +42,8 @@ func pollSqs(chn chan<- *sqs.Message, sess *session.Session) {
 
     }
 
-
-     fmt.Println("#############################")
-     fmt.Println("FINALIZA ITERAÇÃO PARA BUSCAR MENSAGENS DA FILA")
-     fmt.Println("#############################")
+    time.Sleep(3 * time.Second)
+    fmt.Println("Preparing application for polling again...")
 
   }
 
