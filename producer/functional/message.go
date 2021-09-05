@@ -48,3 +48,4 @@ func SendMessage(sess *session.Session, queueURL string) error {
 
     return nil
 }
+

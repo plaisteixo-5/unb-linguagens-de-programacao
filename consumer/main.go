@@ -4,23 +4,27 @@ import (
     "fmt"
     "time"
     "github.com/aws/aws-sdk-go/service/sqs"
+    "github.com/aws/aws-sdk-go/aws/session"
     "estudos.unb.lp.go.consumer/messages/functional"
 )
 
-func pollSqs(chn chan<- *sqs.Message) {
+
+const region = "sa-east-1"
+const endpoint = "http://localhost:4566"
+const queueURL = "http://localhost:4566/000000000000/fila_trabalho_lp"
+
+func pollSqs(chn chan<- *sqs.Message, sess *session.Session) {
 
   for {
 
-    fmt.Println("#############################")
-    fmt.Println("INICIA LOOP PARA BUSCAR MENSAGENS DA FILA")
-    fmt.Println("#############################")
+     fmt.Println("[INICIA LOOP - FETCH] PARA BUSCAR MENSAGENS DA FILA")
+     fmt.Println("Preparing application...")
+     time.Sleep(3 * time.Second)
 
-     region := "sa-east-1"
-     endpoint := "http://localhost:4566"
-     queueURL := "http://localhost:4566/000000000000/fila_trabalho_lp"
+     fmt.Println("Go...")
 
-     sess := functional.CreateAwsSession(region, endpoint)
      msgResult, err := functional.GetMessages(sess, queueURL, 15)
+     fmt.Println("[POLL] QUANTIDADE DE MENSAGENS:", len(msgResult.Messages))
 
      if err != nil {
         fmt.Println("Got an error receiving messages:")
@@ -33,14 +37,20 @@ func pollSqs(chn chan<- *sqs.Message) {
      fmt.Println("#############################")
 
     for _, message := range msgResult.Messages {
-      fmt.Println("#############################")
-      fmt.Println("[INICIO-LOOP] ENVIA MENSAGEM RECEBIDA PARA O CANAL DE MENSAGENS")
-      fmt.Println("#############################")
+      fmt.Println("[INICIO-LOOP-MENSAGENS RECEBIDAS] ENVIA MENSAGEM RECEBIDA PARA O CANAL DE MENSAGENS")
       chn <- message
-      fmt.Println("[FIM-LOOP] ENVIA MENSAGEM RECEBIDA PARA O CANAL DE MENSAGENS")
+      fmt.Println("[FIM-LOOP-MENSAGENS RECEBIDAS] ENVIA MENSAGEM RECEBIDA PARA O CANAL DE MENSAGENS")
     }
 
   }
+
+}
+
+func handleMessage(message sqs.Message, sess *session.Session, queueURL string, messageCounter int) {
+
+    fmt.Println("[HANDLING MESSAGE] MESSAGE NUMBER=%d BEING SEND TO RESPECTIVE DESTINATION", messageCounter)
+    functional.SendByPOSTRequest(message)
+    functional.DeleteMessage(sess, queueURL, *message.ReceiptHandle)
 
 }
 
@@ -53,16 +63,18 @@ func main() {
     fmt.Println("#############################")
 
      chnMessages := make(chan *sqs.Message, 10)
-     go pollSqs(chnMessages)
+     sess := functional.CreateAwsSession(region, endpoint)
 
+     go pollSqs(chnMessages, sess)
+
+     fmt.Println("[POLL] QUANTIDADE DE MENSAGENS:", len(chnMessages))
+
+     messageCounter := 0
      for message := range chnMessages {
-        fmt.Println("#############################")
-        fmt.Println("#############################")
-    	fmt.Println("Message ID:     " + *message.MessageId)
-        fmt.Println("Message Handle: " + *message.ReceiptHandle)
-        fmt.Println("Message Body: " + *message.Body)
-        fmt.Println("#############################")
-        fmt.Println("#############################")
+
+          messageCounter += 1
+          go handleMessage(*message, sess, queueURL, messageCounter)
+
      }
 
 }
