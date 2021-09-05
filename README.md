@@ -26,7 +26,7 @@ Vantagens dessa implementação -> Caso exista um fluxo muito grande de mensagen
 
 ## Funcionamento do Consumer
 
-![](/assets/consumer-estrutura.png)
+![](/assets/consumer-estrutura-v2.png)
 
 ### Proposta de trabalho
 
