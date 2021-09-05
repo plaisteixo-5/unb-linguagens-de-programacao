@@ -7,7 +7,7 @@ import (
 )
 
 
-func GetMessages(sess *session.Session, queueURL string, timeout *int64) (*sqs.ReceiveMessageOutput, error) {
+func GetMessages(sess *session.Session, queueURL string, timeout int64) (*sqs.ReceiveMessageOutput, error) {
 
     svc := sqs.New(sess)
 
@@ -20,7 +20,7 @@ func GetMessages(sess *session.Session, queueURL string, timeout *int64) (*sqs.R
         },
         QueueUrl:            aws.String(queueURL),
         MaxNumberOfMessages: aws.Int64(10),
-        VisibilityTimeout:   timeout,
+        VisibilityTimeout:   aws.Int64(timeout),
     })
 
     if err != nil {

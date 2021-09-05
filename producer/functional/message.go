@@ -16,8 +16,6 @@ type message struct {
 
 func SendMessage(sess *session.Session, queueURL string) error {
 
-/*     var newMessage = message{ID: "1", Titulo: "Mensagem teste 1", DataCriacao: "1/08/2021", Origem: "SQS producer"} */
-
     svc := sqs.New(sess)
 
     _, err := svc.SendMessage(&sqs.SendMessageInput{
