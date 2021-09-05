@@ -72,6 +72,9 @@ Código inicial de exemplo (main.go) retirado da documentação: https://golang.
 4.1) Na pasta /consumer:
    
 > go get .
+
+<br/>
+
 > go run .
  
 obs.: talvez seja necessário executar o comando go mod tidy, caso alteremos as dependências do projeto
@@ -80,6 +83,9 @@ obs.: talvez seja necessário executar o comando go mod tidy, caso alteremos as 
 5.1) Na pasta /producer:
 
 > go get .
+
+<br/>
+
 > go run .
 
 obs.: talvez seja necessário executar o comando go mod tidy, caso alteremos as dependências do projeto
