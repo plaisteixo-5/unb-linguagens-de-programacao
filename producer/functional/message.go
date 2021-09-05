@@ -8,10 +8,10 @@ import (
 
 
 type message struct {
-    ID     string  `json:"id"`
-    Titulo  string  `json:"title"`
-    DataCriacao string  `json:"dataCriacao"`
-    Origem  string `json:"origem"`
+    ID          string  `json:"id"`
+    Title      string  `json:"title"`
+    CreatedDate string  `json:"created_date"`
+    Origin      string `json:"origin"`
 }
 
 func SendMessage(sess *session.Session, queueURL string) error {
@@ -25,15 +25,15 @@ func SendMessage(sess *session.Session, queueURL string) error {
                 DataType:    aws.String("Number"),
                 StringValue: aws.String("1"),
             },
-            "Titulo": &sqs.MessageAttributeValue{
+            "Title": &sqs.MessageAttributeValue{
                 DataType:    aws.String("String"),
                 StringValue: aws.String("Mensagem teste 1"),
             },
-            "DataCriacao": &sqs.MessageAttributeValue{
+            "CreatedDate": &sqs.MessageAttributeValue{
                 DataType:    aws.String("String"),
                 StringValue: aws.String("1/08/2021"),
             },
-            "Origem": &sqs.MessageAttributeValue{
+            "Origin": &sqs.MessageAttributeValue{
                 DataType:    aws.String("String"),
                 StringValue: aws.String("SQS producer"),
             },
