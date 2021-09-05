@@ -25,6 +25,7 @@ func GetMessages(sess *session.Session, queueURL string, timeout int64) (*sqs.Re
     })
 
     if err != nil {
+        fmt.Println("[METHOD - GetMessages] Não foi possível buscar novas mensagens...algum erro ocorreu!")
         return nil, err
     }
 
@@ -42,7 +43,10 @@ func DeleteMessage(sess *session.Session, queueURL string, messageHandle string)
     })
 
     if err != nil {
+        fmt.Println("[METHOD - DeleteMessage] Não foi possível deletar essa mensagem de messageHandle = ", messageHandle)
         return err
+    }else {
+        fmt.Println("[METHOD - DeleteMessage] Mensagem deletada com sucesso! MessageHandle = ", messageHandle)
     }
 
     return nil
@@ -50,12 +54,14 @@ func DeleteMessage(sess *session.Session, queueURL string, messageHandle string)
 
 func SendByPOSTRequest(message sqs.Message) {
 
-    fmt.Println("#############################")
+    fmt.Println("\n")
+    fmt.Println("NEW MESSAGE:")
     fmt.Println("#############################")
     fmt.Println("Message ID:     " + *message.MessageId)
     fmt.Println("Message Handle: " + *message.ReceiptHandle)
     fmt.Println("Message Body: " + *message.Body)
     fmt.Println("#############################")
-    fmt.Println("#############################")
+    fmt.Println("\n")
+
 
 }

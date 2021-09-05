@@ -12,6 +12,7 @@ func main() {
     queueURL := "http://localhost:4566/000000000000/fila_trabalho_lp"
 
     sess := functional.CreateAwsSession(region, endpoint)
+
     err := functional.SendMessage(sess, queueURL)
 
     if err != nil {
@@ -19,8 +20,6 @@ func main() {
         fmt.Println(err)
         return
     }
-
-    fmt.Println("Sent message to queue ")
 
 }
 

@@ -4,6 +4,7 @@ import (
     "github.com/aws/aws-sdk-go/aws"
     "github.com/aws/aws-sdk-go/aws/session"
     "github.com/aws/aws-sdk-go/service/sqs"
+    "fmt"
 )
 
 
@@ -17,6 +18,8 @@ type message struct {
 func SendMessage(sess *session.Session, queueURL string) error {
 
     svc := sqs.New(sess)
+
+    fmt.Println("Sending new message to queue...")
 
     _, err := svc.SendMessage(&sqs.SendMessageInput{
         DelaySeconds: aws.Int64(2),
