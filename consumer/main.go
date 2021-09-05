@@ -17,7 +17,7 @@ func pollSqs(chn chan<- *sqs.Message, sess *session.Session) {
 
   for {
 
-     fmt.Println("[INICIA LOOP - FETCH] PARA BUSCAR MENSAGENS DA FILA")
+     fmt.Println("[INICIA ITERAÇÃO - FETCH] PARA BUSCAR MENSAGENS DA FILA")
      fmt.Println("Preparing application...")
      time.Sleep(3 * time.Second)
 
@@ -32,15 +32,20 @@ func pollSqs(chn chan<- *sqs.Message, sess *session.Session) {
         return
      }
 
-     fmt.Println("#############################")
-     fmt.Println("FINALIZA LOOP PARA BUSCAR MENSAGENS DA FILA")
-     fmt.Println("#############################")
-
     for _, message := range msgResult.Messages {
-      fmt.Println("[INICIO-LOOP-MENSAGENS RECEBIDAS] ENVIA MENSAGEM RECEBIDA PARA O CANAL DE MENSAGENS")
+
+      fmt.Println("[INICIO-ITERAÇÃO-MENSAGENS RECEBIDAS] ENVIA MENSAGEM RECEBIDA PARA O CANAL DE MENSAGENS")
+
       chn <- message
-      fmt.Println("[FIM-LOOP-MENSAGENS RECEBIDAS] ENVIA MENSAGEM RECEBIDA PARA O CANAL DE MENSAGENS")
+
+      fmt.Println("[FIM-ITERAÇÃO-MENSAGENS RECEBIDAS] ENVIA MENSAGEM RECEBIDA PARA O CANAL DE MENSAGENS")
+
     }
+
+
+     fmt.Println("#############################")
+     fmt.Println("FINALIZA ITERAÇÃO PARA BUSCAR MENSAGENS DA FILA")
+     fmt.Println("#############################")
 
   }
 
@@ -56,15 +61,17 @@ func handleMessage(message sqs.Message, sess *session.Session, queueURL string, 
 
 func main() {
 
-    fmt.Println("#############################")
-    fmt.Println("#############################")
-    fmt.Println("ENTRY-POINT: INICIA APLICAÇÃO")
-    fmt.Println("#############################")
-    fmt.Println("#############################")
+     fmt.Println("#############################")
+     fmt.Println("#############################")
+     fmt.Println("ENTRY-POINT: INICIA APLICAÇÃO")
+     fmt.Println("#############################")
+     fmt.Println("#############################")
 
+     fmt.Println("EM BLOCK, ESPERANDO O CHANNEL RECEBER OS VALORES")
      chnMessages := make(chan *sqs.Message, 10)
      sess := functional.CreateAwsSession(region, endpoint)
 
+     fmt.Println("UTILIZA UMA GOROUTINE PARA REINICIAR, DE FORMA CONCORRENTE, UM NOVO POLLING DA FILA")
      go pollSqs(chnMessages, sess)
 
      fmt.Println("[POLL] QUANTIDADE DE MENSAGENS:", len(chnMessages))
@@ -73,6 +80,8 @@ func main() {
      for message := range chnMessages {
 
           messageCounter += 1
+
+          fmt.Println("AQUI A FUNÇÃO HANDLE MESSAGE É LANÇADA NUMA GOROUTINE, ACELERANDO O PROCESSO DE HANDLE RELATIVO À CADA MENSAGEM")
           go handleMessage(*message, sess, queueURL, messageCounter)
 
      }
