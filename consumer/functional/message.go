@@ -7,7 +7,6 @@ import (
     "github.com/aws/aws-sdk-go/service/sqs"
 )
 
-
 func GetMessages(sess *session.Session, queueURL string, timeout int64) (*sqs.ReceiveMessageOutput, error) {
 
     svc := sqs.New(sess)
@@ -50,6 +49,41 @@ func DeleteMessage(sess *session.Session, queueURL string, messageHandle string)
     }
 
     return nil
+}
+
+func sendMessagesToChannel(chn chan<- *sqs.Message, msgResult *sqs.ReceiveMessageOutput) {
+
+      for _, message := range msgResult.Messages {
+
+        fmt.Println("[POLL SQS] Enviando mensagens para o channel...")
+        chn <- message
+
+      }
+
+}
+
+func handleMessage(message sqs.Message, sess *session.Session, queueURL string, messageCounter int) {
+
+    fmt.Println("[METHOD - handleMessage] MESSAGE NUMBER= ", messageCounter, " BEING SEND TO RESPECTIVE DESTINATION")
+    SendByPOSTRequest(message)
+    DeleteMessage(sess, queueURL, *message.ReceiptHandle)
+
+}
+
+func HandleAllReceivedMessages(chnMessages chan *sqs.Message, sess *session.Session) {
+
+    messageCounter := 0
+    for message := range chnMessages {
+
+       messageCounter += 1
+
+       fmt.Println("[METHOD - handleAllReceivedMessages] As mensagens estão sendo enviadas para seu destino final...")
+
+       // Função executada de forma concorrente...
+       go handleMessage(*message, sess, queueURL, messageCounter)
+
+   }
+
 }
 
 func SendByPOSTRequest(message sqs.Message) {
