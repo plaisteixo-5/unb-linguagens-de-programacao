@@ -82,7 +82,7 @@ direito a cursos direcionados à computação em nuvem.
 
 ## Funcionamento do Producer
 
-![](/assets/producer-estrutura-v3.png)
+![](/assets/producer-estrutura-v1.png)
 
 ## Funcionamento das APIs das Universidades
 
