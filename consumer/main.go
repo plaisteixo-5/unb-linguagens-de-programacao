@@ -4,23 +4,22 @@ import (
 	"fmt"
 	"time"
 
-	"estudos.unb.lp.go.consumer/messages/functional"
+	"github.com/MarceloAmorim25/unb-linguagens-de-programacao/consumer/functional"
 	"github.com/aws/aws-sdk-go/service/sqs"
 )
 
 const (
 	region   = "sa-east-1"
 	endpoint = "http://localhost:4566"
-	queueURL = "http://localhost:4566/000000000000/fila_trabalho_lp"
 )
 
 func main() {
 
-	fmt.Println("#############################")
+	fmt.Println("")
 	fmt.Println("#############################")
 	fmt.Println("[MAIN] ENTRY-POINT: INICIA APLICAÇÃO")
 	fmt.Println("#############################")
-	fmt.Println("#############################")
+	fmt.Println("")
 
 	fmt.Println("[MAIN] CHANNEL -> RECEBE MENSAGENS...")
 	messagesChannel := make(chan *sqs.Message, 10)

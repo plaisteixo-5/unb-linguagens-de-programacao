@@ -8,8 +8,6 @@ import (
 )
 
 const (
-    region = "sa-east-1"
-    endpoint = "http://localhost:4566"
     queueURL = "http://localhost:4566/000000000000/fila_trabalho_lp"
 )
 

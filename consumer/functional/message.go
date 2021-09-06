@@ -66,7 +66,11 @@ func handleMessage(message sqs.Message, sess *session.Session, queueURL string, 
 
     fmt.Println("[METHOD - handleMessage] MESSAGE NUMBER= ", messageCounter, " BEING SEND TO RESPECTIVE DESTINATION")
     SendByPOSTRequest(message)
-    DeleteMessage(sess, queueURL, *message.ReceiptHandle)
+    err := DeleteMessage(sess, queueURL, *message.ReceiptHandle)
+
+    if err != nil {
+        return
+    }
 
 }
 
@@ -79,7 +83,6 @@ func HandleAllReceivedMessages(chnMessages chan *sqs.Message, sess *session.Sess
 
        fmt.Println("[METHOD - handleAllReceivedMessages] As mensagens estão sendo enviadas para seu destino final...")
 
-       // Função executada de forma concorrente...
        go handleMessage(*message, sess, queueURL, messageCounter)
 
    }
