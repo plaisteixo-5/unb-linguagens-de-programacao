@@ -1,8 +1,8 @@
 package main
 
 import (
-    "fmt"
     "estudos.unb.lp.go.producer/messages/functional"
+    "fmt"
 )
 
 func main() {

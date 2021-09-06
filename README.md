@@ -1,4 +1,5 @@
-# unb-linguagens-de-programacao
+# Universidade de Brasília
+# Linguagens de Programação
 
 Repositório dedicado à matéria de Linguagens de Programação
 
@@ -10,28 +11,55 @@ Este projeto será desenvolvido em Go. A ideia é explorar o conceito de concorr
 
 ## Contextualização
 
-Um serviço produtor de mensagens (Producer) é responsável por receber retornos relativos à três Universidades. A empresa responsável pela produção de mensagens 
-envia os três tipos: A, B e C. Entretanto, algumas mensagens estão vindo com formatos incorretos e precisam ser filtradas. Essas universidades contraram uma equipe de
-desenvolvedores para solucionar o problema de distribuição de mensagens, após muitas reclamações de mensagens que não chegavam ao seu destino. Os devs identificaram
-que muitas mensagens incorretas estavam sobrecarregando as aplicações e o serviço de fila da AWS (SQS) - o qual continuava tentando reenviar as mensagens incorretas.
-Além disso, foi percebido que os fluxos de mensagens eram muito maiores para alguns tipos de mensagens apenas. A implementação original era totalmente síncrona
-e sequencial, gerando diversos problemas no processamento dessas mensagens. Nesse projeto, tentamos solucionar a questão utilizando os recursos da linguagem Go.
+#### Geral
+
+Três universidades se reuniram para fazer uma campanha de incentivo à leitura. Para isso, fizeram uma parceria com a Biblioteca Central da Cidade X. O que foi
+acordado é que a Biblioteca enviará uma mensagem às Universidades A, B e C notificando os eventos de EMPRESTIMO, DEVOLUÇÃO e ATRASO. Cada uma dessas mensagens
+também deverão ser enviadas a um Comitê Central (composto por membros das três universidades), o qual ficará responsável pela conferência da contagem
+feita por cada uma das Universidades participantes e servirá como recurso reserva caso o sistema de uma das universidades fique offline.
 
 
-Vantagens dessa implementação -> Caso exista um fluxo muito grande de mensagens de A, isso não gerará impacto nos fluxos de B e C, tendo em vista o funcionamento independente.
+#### Situação problema
+
+As universidades possuem muitos alunos e o fluxo de mensagens pode ser intenso. Para isso, utilizaremos um serviço de fila da Amazon Web Services (SQS). A fila SQS 
+é escalável, performática e segura. Assim garantimos que a competição tenha uma contagem fidedigna.
+
+### Construção da solução
+
+##### De início, desenvolveremos a aplicação de uma Biblioteca.
+
+Essa aplicação será responsável apenas por receber três tipos de mensagens e enviar para o Producer.
+
+##### Em seguida, serão desenvolvidas duas aplicações para interagir com a fila SQS: o Producer e o Consumer.
+
+Producer: será responsável por receber as mensagens da Biblioteca e enviar pra fila.
+Consumer: será responsável por receber as mensagens da fila e direcionar para as rotas corretas.
+
+##### Por fim, as APIs das Universidades e do Comitê Central. 
+
+api-universidade-a: recebe a mensagem e faz a persistência no banco de dados.
+api-universidade-b: recebe a mensagem e faz a persistência no banco de dados.
+api-universidade-c: recebe a mensagem e faz a persistência no banco de dados.
+
+#### Pontuação
+
+Empréstimo: 5 pontos
+Devolução: 10 pontos
+Atraso para devolução: -5 pontos
+
+#### Premiação
+
+A Universidade que conseguir incentivar o maior número de estudantes a ler, ganhará um ano de recursos ilimitados nos serviços da AWS (Amazon Web Services), com
+direito a cursos direcionados à computação em nuvem.
 
 ### Arquitetura geral do projeto
 
-![](/assets/arquitetura_geral_v002.png)
+![](/assets/arquitetura_geral_v004.png)
 
 ## Funcionamento do Consumer
 
 ![](/assets/consumer-estrutura-v2.png)
 
-### Proposta de trabalho
-
- Nosso consumer precisa resolver várias questões ao mesmo tempo e não pode realizar tudo de forma síncrona. Será necessário explorar os recursos da linguagem Golang
-para lidar com várias situações de modo concorrente. Utilizaremos as Goroutines e channels como recursos da linguagem para lidar com os desafios que nossa aplicação tem.
 
 ## Setup do ambiente
 
