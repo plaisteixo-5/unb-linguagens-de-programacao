@@ -20,7 +20,12 @@ Código inicial de exemplo (main.go) retirado da documentação: https://golang.
 > docker compose up
 
 2) definir as variáveis de ambiente na pasta do consumer e do producer:
+   
+   Se estiver no Windows, rode:
 
+```
+set  AWS_ACCESS_KEY_ID=teste && set  AWS_SECRET_ACCESS_KEY=teste && set  AWS_SESSION_TOKEN=teste && set  AWS_DEFAULT_REGION=sa-east-1 && set  AWS_DEFAULT_OUTPUT=json
+```
 ```
  export AWS_ACCESS_KEY_ID=teste &&
  export AWS_SECRET_ACCESS_KEY=teste &&
@@ -42,7 +47,11 @@ Código inicial de exemplo (main.go) retirado da documentação: https://golang.
 
 > go run .
 
-obs.: talvez seja necessário executar o comando go mod tidy, caso alteremos as dependências do projeto
+obs.: talvez seja necessário executar o comando:
+
+> go mod tidy
+
+caso alteremos as dependências do projeto
 
 5) Nesse momento a fila já está pronta, precisamos executar nossas aplicações:
    5.1) Na pasta /producer:
