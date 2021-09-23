@@ -1,8 +1,8 @@
 package main
 
 import (
+	"estudos.unb.lp.go.producer/messages/functional"
 	"fmt"
-	"github.com/MarceloAmorim25/unb-linguagens-de-programacao/producer/functional"
 )
 
 const (

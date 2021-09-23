@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/MarceloAmorim25/unb-linguagens-de-programacao/consumer/functional"
+	"estudos.unb.lp.go.consumer/messages/functional"
 	"github.com/aws/aws-sdk-go/service/sqs"
 )
 
