@@ -24,7 +24,7 @@ Código inicial de exemplo (main.go) retirado da documentação: https://golang.
    Se estiver no Windows, rode:
 
 ```
-set  AWS_ACCESS_KEY_ID=teste && set  AWS_SECRET_ACCESS_KEY=teste && set  AWS_SESSION_TOKEN=teste && set  AWS_DEFAULT_REGION=sa-east-1 && set  AWS_DEFAULT_OUTPUT=json
+set AWS_ACCESS_KEY_ID=teste && set  AWS_SECRET_ACCESS_KEY=teste && set  AWS_SESSION_TOKEN=teste && set  AWS_DEFAULT_REGION=sa-east-1 && set  AWS_DEFAULT_OUTPUT=json
 ```
 ```
  export AWS_ACCESS_KEY_ID=teste &&

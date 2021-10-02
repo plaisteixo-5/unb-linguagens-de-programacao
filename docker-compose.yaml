@@ -8,10 +8,9 @@ services:
       - AWS_DEFAULT_REGION=sa-east-1
       - AWS_SESSION_TOKEN=teste
       - EDGE_PORT=4566
-      - SERVICES=sqs,dynamodb
+      - SERVICES=sqs
     ports:
       - '4566:4566'
-      - '4569:4569'
 
   setup-fila-sqs:
     image: amazon/aws-cli
@@ -33,76 +32,10 @@ services:
         # Cria fila SQS
         aws sqs create-queue --endpoint-url=http://localstack:4566 --queue-name fila_trabalho_lp;
 
-        sleep 3
-        # Cria tabelas no dynamoDB
-
-        # Tabela API A
-        aws dynamodb create-table --endpoint-url=http://localstack:4569 \
-            --table-name UniversidadeA \
-            --attribute-definitions \
-                AttributeName=id,AttributeType=S \
-                AttributeName=evento,AttributeType=S \
-                AttributeName=destino,AttributeType=S \
-                AttributeName=duracao,AttributeType=S \
-            --key-schema \
-                AttributeName=pk,KeyType=HASH \
-                AttributeName=sk,KeyType=RANGE \
-            --provisioned-throughput \
-                ReadCapacityUnits=10,WriteCapacityUnits=5;
-
-        sleep 3
-
-        # Tabela API B
-        aws dynamodb create-table --endpoint-url=http://localstack:4569 \
-            --table-name UniversidadeB \
-            --attribute-definitions \
-                AttributeName=id,AttributeType=S \
-                AttributeName=evento,AttributeType=S \
-                AttributeName=destino,AttributeType=S \
-                AttributeName=duracao,AttributeType=S \
-            --key-schema \
-                AttributeName=pk,KeyType=HASH \
-                AttributeName=sk,KeyType=RANGE \
-            --provisioned-throughput \
-                ReadCapacityUnits=10,WriteCapacityUnits=5;
-
-        sleep 3
-
-        # Tabela API C
-        aws dynamodb create-table --endpoint-url=http://localstack:4569 \
-            --table-name UniversidadeC \
-            --attribute-definitions \
-                AttributeName=id,AttributeType=S \
-                AttributeName=evento,AttributeType=S \
-                AttributeName=destino,AttributeType=S \
-                AttributeName=duracao,AttributeType=S \
-            --key-schema \
-                AttributeName=pk,KeyType=HASH \
-                AttributeName=sk,KeyType=RANGE \
-            --provisioned-throughput \
-                ReadCapacityUnits=10,WriteCapacityUnits=5;
-
-        sleep 3
-
-        # Tabela Comitê Central
-        aws dynamodb create-table --endpoint-url=http://localstack:4569 \
-            --table-name ComiteCentral \
-            --attribute-definitions \
-                AttributeName=id,AttributeType=S \
-                AttributeName=evento,AttributeType=S \
-                AttributeName=destino,AttributeType=S \
-                AttributeName=duracao,AttributeType=S \
-            --key-schema \
-                AttributeName=pk,KeyType=HASH \
-                AttributeName=sk,KeyType=RANGE \
-            --provisioned-throughput \
-                ReadCapacityUnits=10,WriteCapacityUnits=5;
-
         echo [INFO] OK...
 
       "
     depends_on:
       - localstack
-
 
 
